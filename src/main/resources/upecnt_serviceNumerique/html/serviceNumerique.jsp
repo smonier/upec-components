@@ -64,11 +64,11 @@
     </c:when>
 </c:choose>
 
-<div class="card m-2 ${myTags} ${myCat}" style="width: 16rem;">
+<div class="card m-2 overlay ${myTags} ${myCat}" style="width: 16rem;height:480px">
     <c:if test="${not empty image}">
         <jahia:addCacheDependency node="${image.node}" />
         <c:url value="${url.files}${image.node.path}" var="imageUrl"/>
-        <div class="img-fluid">
+        <div class="img-fluid ">
             <a href="<c:url value='${url.base}${currentNode.path}.html'/>">
 
                 <img class="card-img-top" src="${imageUrl}" alt="${title}" width="100%">
@@ -76,10 +76,10 @@
             </a>
         </div>
     </c:if>
-    <div class="card-body">
+    <div class="card-body" style="margin-top:-80px">
         <h4 class="card-title">${fn:escapeXml(title.string)}</h4>
-        <p class="card-text">${description}</p>
-        <a href="${linkUrl}" class="mt-auto btn btn-primary btn-sm" target="${linkTarget}">${buttonText.string}</a>
+        <p class="card-text">${functions:abbreviate(functions:removeHtmlTags(description),200,250,'...')}</p>
+        <a href="${linkUrl}" class="mb-3 mr-3 btn btn-primary btn-sm align-self-end" style="position:absolute;bottom:0;right:0" target="${linkTarget}">${buttonText.string}</a>
     </div>
 </div>
 
