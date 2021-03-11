@@ -1,0 +1,35 @@
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<upecnt = 'http://www.jahia.org/upec/nt/1.0'>
+<upecmix = 'http://www.jahia.org/upec/mix/1.0'>
+
+[upecmix:upecComponents] > jmix:droppableContent, jmix:visibleInContentTree, jmix:editorialContent mixin
+
+[upecnt:serviceNumerique] > jnt:content, mix:title, upecmix:linkTo, upecmix:upecComponents
+ - jcr:title (string) internationalized mandatory
+ - description (string, richtext) internationalized
+ - image (weakreference, picker[type='image']) i18n
+ - buttonText (string) internationalized
+
+//*** CONTENT LINKER //
+[upecmix:linkTo] mixin
+ - linkType (string, choicelist[upecLinkTypeInitializer,resourceBundle]) indexed=no < 'iFrame', 'internalLink', 'externalLink', 'self'
+ - linkTarget (string, choicelist[resourceBundle]) = _blank autocreated indexed=no < '_blank', '_self', '_parent', '_top'
+
+[upecmix:internalLink] > jmix:templateMixin mixin
+ extends = upecmix:linkTo
+ - internalLink (weakreference, picker[type='editoriallink']) < 'jmix:droppableContent', 'jnt:page', 'jnt:file'
+
+[upecmix:externalLink] > jmix:templateMixin mixin
+ extends = upecmix:linkTo
+ - externalLink (string) = 'https://'
+
+[upecmix:iFrame] > jmix:templateMixin mixin
+ extends = upecmix:linkTo
+ - source (string) = 'https://'
+ - width (string)
+ - height (string)
+// CONTENT LINKER ***//
+
+
+[upecnt:serviceNumeriqueHeading] > jnt:content, jmix:bindedComponent, upecmix:upecComponents
